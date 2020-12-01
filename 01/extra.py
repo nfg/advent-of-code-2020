@@ -8,15 +8,14 @@ with open('input', 'r') as fh:
 
 while lines:
     head = lines.pop()
-    backup = list(lines)
+    working_set = list(lines)
 
-    while lines:
-        head2 = lines.pop()
-        for ele in lines:
+    while working_set:
+        head2 = working_set.pop()
+        for ele in working_set:
             if head + head2 + ele == TARGET:
                 print(head * head2 * ele)
                 sys.exit(0)
-    lines = backup
 
 print(":(")
 sys.exit(1)

@@ -1,4 +1,3 @@
-
 #!/usr/bin/env raku
 
 my Int @lines = 'input'.IO.lines.map: *.Int;
