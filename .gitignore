@@ -1,0 +1,6 @@
+local/
+.envrc
+.direnv/
+
+# Data files
+01/input
