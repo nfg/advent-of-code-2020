@@ -1,5 +1,7 @@
 const fs = require('fs');
 fs.readFile('input', {encoding: "UTF-8"}, (err, data) => {
+  if (err) { throw err }
+
   const lines = data.trimEnd().split("\n");
   const max = lines[0].length;
 
