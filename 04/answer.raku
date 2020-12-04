@@ -54,8 +54,9 @@ my @validation = (
 
 sub parse_raw_passport ($passport) {
     return $passport.split(/\s/, :skip-empty(True)).map({
-        my $match = m/^ (.*) ":" (.*) $/ or die;
-        $match[0] => $match[1]
+        m/^ (.*) ":" (.*) $/ or die;
+        $/.Slip; # Returns both matches as separate elements to caller.
+                 # You could also do |$/ , but that's super unreadable.
     }).Hash;
 }
 
