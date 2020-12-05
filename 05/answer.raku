@@ -1,5 +1,7 @@
 #!/usr/bin/env raku
 
+# OK, we don't actually need seat objects, just the ids.
+# But I had to refresh myself on raku OOP, so it stays.
 class Seat {
     has $.row;
     has $.seat;
@@ -24,21 +26,21 @@ sub get-seat ($code) {
 }
 
 # What is the highest seat ID on a boarding pass?
-sub solve-part1(@seats) {
-    return @seats.sort({ .id }).tail.id;
+sub solve-part1(@seat-ids) {
+    return max @seat-ids;
 }
 
 # Your seat wasn't at the very front or back, though; the seats with IDs +1 and -1 from yours will be in your list.
 # What is the ID of your seat?
-sub solve-part2 (@seats) {
-    my ($prev-id, @ids) = @seats.map({ .id }).sort;
-    for @ids -> $next-id {
-        return $prev-id + 1 if $prev-id + 2 == $next-id;
-        $prev-id = $next-id;
-    }
-    die;
+sub solve-part2 (@seat-ids) {
+    # You can return directly from code blocks (not functions!)
+    @seat-ids.sort.reduce: {
+        $^a + 2 == $^b ?? return $^a + 1 !! $^b;
+    };
+    die "Seat not found!";
 }
 
-my @seats = $?FILE.IO.sibling("input").lines.map(&get-seat);
-say "Part 1: {solve-part1(@seats)}";
-say "Part 2: {solve-part2(@seats)}";
+#my @seats = $?FILE.IO.sibling("input").lines.map(&get-seat);
+my @seat-ids = $?FILE.IO.sibling("input").lines.map(&get-seat).map: *.id;
+say "Part 1: {solve-part1(@seat-ids)}";
+say "Part 2: {solve-part2(@seat-ids)}";
